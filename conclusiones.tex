@@ -1,0 +1,87 @@
+\secnumbersection{CONCLUSIONES}
+El presente capítulo se estructura en cuatro secciones, el primer subcapítulo se concentra en proporcionar visión general de los resultados obtenidos en el capítulo 4. En el segundo subcapítulo se analiza cómo los resultados se vinculan con el cumplimiento de los objetivos y en el tercero se presenta una perspectiva sobre el trabajo pendiente, el futuro y las mejoras. El último subcapítulo corresponde a las palabras finales del autor, sobre todo el proceso de desarrollo y el producto final.
+
+\subsection{Visión general de los resultados}
+Como en el capítulo 4 se analizan diversos aspectos, vamos a dirigirnos subcapítulo por subcapítulo, dando unas cuantas palabras acerca de los resultados alcanzados.
+
+En capítulo 4.1 se evidenció, en varias situaciones, la importancia de la elección de \textit{ansazt} para asegurar resultados con un bajo error. La situación más clara se presenta en la figura \ref{fig:1}, en la cual, para un mismo \textit{ansazt}, los efectos de la elección del parámetro $J$ afectan de forma notable en los valores numéricos de las soluciones obtenidas. Después hay otro problema cuando dos \textit{ansazt}, generados de la teoría \textit{Unitary couple cluster}, no representan la misma física. Esto es visible en la figura \ref{fig:5}, donde para la molécula de $LiH$, los \textit{ansazt} UCCSD y kUpCCGSD dan resultados distintos. Esto evidencia lo sensible del tema de la elección de \textit{ansazt}, donde la única solución aparente es realizar los cálculos con un conjunto de \textit{ansazt}.
+
+En el capítulo 4.2, se observaron las diferencias en el consumo de memoria RAM de cada una de las presentaciones, respectivamente. Dejando de lado los dímeros de elementos, se visualizó una tendencia de nuestra representación (presentada en el capítulo 3.2.2), a medida que el sistema aumentaba en tamaño, que solo compite con las otras representaciones consideradas en sistemas de tamaño pequeño a mediano, ya para sistemas de mayor tamaño, teniendo en cuentas las tendencias mostradas, se requerirá una mayor cantidad de memoria. Esto hace que sea necesario replantear la implementación de nuestra representación para hacerlo más eficiente en sistemas de mayor tamaño.
+
+En el capítulo 4.3, se puede ver que el VQE es el que más tiempo necesita. En la figura \ref{fig:36}, se ve mejor que Diagonalización exacta y una tendencia que parece logarítmica (considerando que el eje Y está en escala logarítmica). Estos resultados hacen que sea necesario replantear la implementación realizada además de los \textit{ansazt} seleccionados, ya que, son estos los que determinan el número de parámetros que el optimizador debe manejar.
+
+Finalmente, el capítulo 4.4 fue un experimento para probar posibles extensiones del VQE que permiten ser aplicados para realizar otro tipo de cálculos, el primero de ellos una relajación estructural, cuyo objetivo es llevar a los elementos de una molécula a su estado de equilibrio, en las figuras \ref{fig:41} y \ref{fig:42} se puede ver como distintos optimizadores lograron alcanzar distancias con un error final de $10^{-2}$, lamentablemente este error sigue siendo considerable, teniendo en cuenta que estamos en unidades ángstrom. El segundo experimento fue para calcular observables termodinámicos utilizando el VQD para obtener los niveles excitados, en la figura \ref{fig:46} se puede ver en promedio, los resultados obtenidos son concordantes con los valores exactos, a pesar de que en algunos casos el método falla en las predicciones. Estos errores tienen sus repercusiones en los cálculos siguientes. En ambas aplicaciones se puede apreciar su potencial, no obstante, es necesario dedicar un mayor desarrollo para alcanzar resultados más satisfactorios.
+
+Con todo lo anterior se puede mencionar que los resultados no son los esperados, en las diferentes gráficas se puede ver como el VQE presenta un peor rendimiento en contraste con los otros, por otro lado, la representación de los hamiltonianos elegida muestra tendencias que denotan que no es útil para estructuras grandes. No obstante, las curvas de tendencia del VQE presentan un gran potencial si se implementa de una forma más sofisticada (por ejemplo, mediante paralelización).
+
+
+%
+%
+%
+%
+%
+\subsection{Análisis sobre los objetivos}
+Con lo expresado en el subcapítulo anterior, podemos pasar a hablar sobre como el desarrollo presentado en el capítulo 4 refleja un \textbf{cumplimiento} de los objetivos presentados en los capítulos 1.3.1 y 1.3.2.
+
+\subsubsection{Primer objetivo específico}
+El primer objetivo se define como ''Realizar un estudio que muestre los requerimientos de almacenamiento de los modelos de tipo Fermi-Hubbard, \textit{tight binding}, Heisenberg y estructuras moleculares''. Este estudio se lleva a cabo en el capítulo 4.2, en donde se definen las cuatro posibles representaciones en que se pueden escribir estos modelos (matricial, redes tensoriales, lista de cadenas de Pauli y la representación propia de la librería). Considerando estas cuatro opciones, se utiliza una función de una librería especialidad para estudiar el consumo de memoria de variables (Pymbler), el capítulo 4.2.3 se presentan los resultados que muestran cuanta memoria RAM requieren las variables a medida que aumentamos el tamaño del sistema, de estas gráficas, se pueden derivan las diversas tendencias de cada representación. Esta información nos es útil para determinar en qué forma tenemos que representan los modelos de tal forma que podamos mantener un uso de memoria mínimo.
+
+\subsubsection{Segundo objetivo específico}
+El tercer objetivo se define como ''Realizar un \textit{benchmark} que contraste los tiempos de ejecución y el error absoluto asociado a la solución obtenida, para el problema de valores y vectores propios, de un algoritmo clásico-exacto, clásico-variacional y variacional cuántico, considerando los modelos expuestos en el punto 1''.
+
+Este \textit{benchmark} se encuentra reflejado en los capítulos 4.1 y 4.3. En el primero de ellos se estudia un problema importante que es la relación hamiltoniano-\textit{ansazt}, mostrando la cercanía de la solución obtenida con la solución exacta (a pesar de que el error absoluto de la convergencia solo se muestra para puntos concretos). En este estudio no solo se varían los parámetros del hamiltoniano, sino que, sé varía también el tamaño, pasando de sistemas de baja a mediada dimensionalidad. 
+
+Respecto al segundo capítulo, como solo se trabajan con valores del hamiltoniano que se sabe que funcionan bien, el tema de la calidad de la solución es obviada para solo concentrar el análisis en los tiempos a medida que se aumenta el tamaño del sistema. En este se pueden visualizar las tendencias que presenta cada método en los diferentes modelos, viendo desde tendencias logarítmicas hasta lineales en una escala logarítmica.
+
+Este \textit{benchmark} no considera todos los métodos, cuando se analiza el error de la solución, acá no se trabaja con el método clásico variacional (DMRG) solo con el exacto (Diagonalización exacta), lo cual contrasta con el análisis de tiempos, donde ahí si se consideran todos. Esta diferencia se debe a que en este tipo de estructuras, las soluciones que entrega DMRG para este tipo de sistemas son las exactas, solo con el detalle, de las estructuras moléculas donde no se puede aplicar directamente DMRG.
+
+\subsubsection{Tercer objetivo específico}
+El tercer objetivo se define como ''Proponer un diagrama de flujo de trabajo para la utilización algoritmo cuántico, que permita ser generalizado a una amplia gama de hamiltonianos y sistemas de baja dimensión, utilizando rutinas de código abierto y de elaboración propia''. Los diagramas propuestos se encuentran en los capítulos 3.2.6 y 3.2.7, considerando la programación a base de clases.
+
+Esta idea de programación a base de clases es lo que ofrece al esquema propuesto una generalidad para ser aplicado a una gran gama de hamiltonianos. Como se expresó en ese capítulo, el efecto de cambiar o agregar nuevos hamiltonianos no afecta en las otras clases, solo es necesario crear nuevas clases de este (las otras quedan intactas). Por lo tanto, esta independencia de los componentes permite explotar la generalidad del esquema.
+
+\subsubsection{Cuarto objetivo específico}
+El cuarto objetivo se define como ''Ilustrar la efectividad del diagrama propuesto al aplicarlo en sistemas físicos de baja dimensionalidad''. El diagrama al que hacemos referencia es el presentado en los capítulos 3.2.6 y 3.2.7. Esta habla de cómo construir las clases para una ejecución correcta de los métodos variacionales.
+
+Este diagrama es aplicado en el cálculo de todos los resultados expuestos en los capítulos 4.1, 4.3 y 4.4. Gracias a este, fue posible visualizar los efectos de los diferentes \textit{ansatz} sobre un mismo hamiltoniano (considerando diferentes valores de los parámetros de este). De igual forma, fue útil para implementar las extensiones del VQE para aplicaciones más complejas (relajación de estructuras y cálculo de los niveles excitados). Con lo anterior dicho, es clara la efectividad del diagrama propuesto en las estructuras elegidas, las cuales constituyen sistemas de baja y mediana dimensionalidad.
+
+\subsubsection{Objetivo general}
+Después de revisar uno por uno los objetivos específicos, se puede concluir que el objetivo general, definido en el capítulo 1.3.1, fue satisfactoriamente completado.
+
+Todos los resultados mostrados en el capítulo 4 son un reflejo del objetivo general (además de mostrar como trabajar con este tipo de métodos). Cada subcapítulo del capítulo 4 caracteriza el rendimiento del esquema propuesto (definición de las clases, representación del hamiltoniano, entre otros detalles) para la utilización del método variacional cuántico, entiéndase como tiempos de cálculo y uso de memoria. Además de mostrar esta caracterización, esta se pone en contraste con otras técnicas y representaciones más utilizadas en el área. El análisis anterior permite discriminar y poner en cuenta en qué estado se encuentran los métodos variacionales cuánticos, bajo la implementación de esta memoria, frente a otros.
+
+
+
+%
+%
+%
+%
+%
+\subsection{Trabajo futuro}
+Este subcapítulo será divido en dos secciones, la primera es para describir las posibles mejores sobre las implementaciones realizadas y dar un par de recomendaciones. El segundo, por otro lado, es para indicar extinciones que están relacionadas sobre nuevos sistemas y estructuras que se pueden estudiar.
+
+\subsubsection{Mejoras y recomendaciones}
+Basándonos en lo observado en la sección de análisis de memoria, si bien la representación propuesta (lista de cadenas de Pauli) ofrece en varias situaciones un uso menor de memoria, las tendencias mostradas son preocupantes, por ejemplo, en el caso del modelo de Heisenberg, la representación de Pennylane muestra una tendencia que parece ser logarítmica en contraste con la nuestra, que muestra una de tipo exponencial. Esto nos hace pensar que nuestra representación no es la óptima o requiere de otro enfoque (una nueva forma de almacenar los términos), pero interdependiente de esto, es recomendable seguir con la representación que trae la librería, la cual, se ve que es eficiente a medida que crece el tamaño del sistema. Por otro lado, respecto al uso de los \textit{ansatz}, se recomienda buscar \textit{ansatz} más complejos para estudiar modelos de espines, mientras que los otros dos sí se ven aceptables para ser utilizados en estructuras moleculares y el hamiltoniano de Fermi-Hubbard.
+
+Luego, como en varios sistemas los tiempos de cómputo del VQE fueron muy superiores de lo esperado (ver caso del modelo \textit{tight binding}), una forma de poder atacar esto es utilizar paralelización para calcular los grupos de términos conmutantes, es decir, considerando que cada grupo es independiente de los otros, se pueden ejecutar cada grupo en paralelo y unir los resultados al final. De esta forma es posible mejorar los tiempos en comparación a las ejecuciones secuenciales realizadas en este trabajo. La paralelización de los cálculos, como es mencionado en \cite{VQEReview}, es esencial para lograr ventajas significativas sobre otras técnicas.
+
+Finalmente, el último punto es el poder trabajar utilizando la GPU en vez de la CPU. Pennylane ha estado, en los últimos meses, desarrollando nuevas posibilidades para los usuarios para poder trabajar con módulos de NVIDIA, entre otros, además de crear nuevos simuladores que permiten trabajar con más \textit{qubits} y tener integración con GPU.
+
+\subsubsection{Extensiones y trabajo futuro}
+Los modelos con los que se trabajó corresponden a tipos muy particulares de los mismos, por lo tanto, queda pendiente muchas cosas. Una de ellas corresponde al poder construir estructuras más complejas (diferentes a cadenas y anillos), como grillas hexagonales del grafeno, entre muchas otras. 
+
+Luego está el poder agregar más interacciones a los hamiltonianos de espines y de fermiones para hacer los modelos más realistas o ver su comportamiento, como con campos externos, interacciones concretas como por ejemplo nuevos potenciales, entre otras. Otro detalle de interés es el poder eliminar ciertas consideraciones, por ejemplo, el \textit{tight binding} implementado tiene consideración del efecto de los espines, pero en varios casos, este efecto es despreciado y aun así se pueden estudiar sistemas \cite{EricBLayer}. Fuera de agregar nuevas interacciones, también está el tema de poder agregar nuevos modelos, que sean ajenos a la materia condensada, es decir, hacer que estas técnicas se apliquen en otros contextos, como altas energías \cite{altasenergias}, cosmología \cite{cosmology} entre otras.
+
+Por el lado de las estructuras moleculares, existe un interés en poder estudiar elementos más pesados dentro de la tabla periódica, como pueden ser los lantánidos, óxidos, entre muchas otras.
+
+Otro punto en el que se puede desarrollar y podría traer mejoras en los tiempos de cómputo, además de ir de la mano con lo expresado en el párrafo anterior, es cambiar de \textit{ansatz} de estructura fija a \textit{ansatzs} de estructura variable \cite{ADAPTVQE}, los cuales permiten construir circuitos con una menor profundidad y con un número menor de parámetros. Además de lo anterior, también se tienen que proponer nuevas \textit{ansatz} que permitan capturar los estados de mínima energía de zonas de tipo 2 y tipo 3 (mirar el caso de $J<0$ para el modelo de Heisenberg).
+
+
+\subsection{Palabras finales del autor}
+Este proyecto fue uno de los desafíos más grande a los que me he enfrentado en mi paso por esta universidad, considerando que acá no solo se trabajó con computación cuántica, sino que, con distintas áreas de la física, esto conllevo aprender muchas cosas en un tiempo relativamente corto para hacer de este proyecto algo realizable. Aún quedan muchos detalles por aprender, en especial sobre química cuántica, que pueden llevar a utilizar este software para realizar trabajos interesantes, como uno de los proyectos actuales que es estudiar los niveles excitados de la molécula de amoniaco con solo el VQE. 
+
+Es frente a esto, que a pesar de no obtener los resultados que muestren la llamada ''supremacía cuántica'', si estoy orgullo de lo logrado, en especial porque el \textit{software} es útil en el nuevo paradigma que está siendo cada vez más popular en las diversas \textit{journals} de materia condensada y magnetismo (considerando que varias de las citas de este proyecto son de hace 3 años).
+
+Este proyecto aún tiene varias cosas en donde mejorar, lo cual nos asegura mucho trabajo por delante, que puede ayudar a alcanzar el rendimiento de otros métodos, además de abrir la posibilidad de estudiar estructuras y fenómenos más complejos (particularmente me interesa el poder estudiar transiciones de fases cuánticas).
+
+Con este proyecto y resultados, me hace soñar sobre las posibilidades de tener una máquina cuántica real, si logramos esto con una implementación \textit{naive} y con \textit{qubits} simulados, no puedo esperar a ver lo que podemos lograr con una segunda versión y con \textit{qubits} reales.

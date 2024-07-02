@@ -1,0 +1,266 @@
+\documentclass[letterpaper,12pt]{article}
+\usepackage{academicons}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{physics}
+\usepackage{algpseudocode}
+\usepackage{listings}
+\usepackage{comment} 
+
+
+% @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>
+% VALORES A MODIFICAR POR USTED:
+% @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>
+
+% NOTE: Leer nota en el README sobre la font.
+
+\newcommand{\titulo}{Utilización de algoritmos cuánticos para mejorar rendimiento de simulaciones de nanoestructuras de una y dos dimensiones}
+\newcommand{\ciudad}{Valpara\'iso} % e.g. Valparaíso
+% TODO: Consultar el formato de los nombres:
+\newcommand{\nombrealumno}{Javier Ignacio Norambuena Leiva}
+\newcommand{\nombreprofesor}{Juan Manuel Florez Uribe}
+\newcommand{\nombreprofesorcoguia}{Eric Suarez Morell}
+\newcommand{\nombrecorreferente}{Raquel Pezoa Rivera}
+% Mes y año del examen
+\newcommand{\mesexamen}{Octubre}
+\newcommand{\anioexamen}{2023}
+% Dedicatoria y agradecimientos
+\newcommand{\dedicatoria}{
+¡Despertad, oh jóvenes de la nueva era! - Kenzaburo Oe
+%Considerando lo importancia de este trabajo para los alumnos, este apartado es para que el autor entregue palabras personales para dedicar este documento. La extensión puede ser de máximo una hoja y se deben mantener este formato, tipo y tamaño de letra.
+%Mi mente es una con el cielo y la tierra
+}
+\newcommand{\agradecimientos}{
+%Considerando la importancia de este trabajo para los alumnos, este apartado se podrá incluir en el caso de que el autor desee agradecer a las personas que facilitaron alguna ayuda relevante en su trabajo para la realización de este documento. La extensión puede ser de máximo una hoja y se deben mantener este formato, tipo y tamaño de letra.
+En primer lugar, me gustaría agradecer a mis padres, Juan Ricardo Villar y Paola Leiva Leviñanco por darme el apoyo y ánimos en este difícil proceso de desarrollo de la memoria. Agradecerles también de darme el espacio para poder concentrarme en el desarrollo y lograr graduarme a pesar de las dificultades.
+
+Antes que cualquier otro agradecimiento, quiero agradecer a mi mejor amigo, Felipe Labra por su apoyo y compañía durante estos casi 17 años de amistad. Espero que esta amistad dure mucho más a pesar de que pronto nuestros caminos se separaran.
+
+Quiero agradecerle a mi grupo de amigos que ya no están en esta universidad por todos los buenos momentos que pasamos, gracias Benjamín Montecinos, Paula Gallardo, Gabriel Osandón, Matías Reyes y Farid Funes por todo.
+
+Quiero, además, agradecer al grupo de amigos que hice en mi estancia de en la universidad, los cuales me acompañaron en los mejores y peores momentos, gracias, Amanda Salinas, Valentina Espinoza, Camilo Castro, Emilio Oyanedel, Pedro Tobar, Nicolas Muñoz, Carlos Guerra y Catalina Silva.
+
+Quiero agradecer a mis amigos civiles matemáticos que me adoptaron en su departamento, y una mención especial a Felipe Labra, Pedro Tobar, Nicolas Muñoz y Emilio Oyanedel que me ayudaron a no corromperme con laxidad de las demostraciones físicas y seguir el sendero del formalismo matemático.
+
+Además, quiero agradecer a mi grupo de \textit{running}, que me ayudaron a no descuidar mi salud física, gracias, Amanda Salinas y Valentina Espinoza por tantas risas y competiciones en las que participamos.
+
+Luego quiero agradecer al profesor Juan Manuel, al profesor Eric Suarez y a todo el grupo de simulaciones del departamento de física por darme la oportunidad de trabajar en el área que me gusta, la de la computación cuántica. No saben cómo les agradezco su ayuda, la dedicación y la amabilidad de ayudar a alguien ajeno a la física a entrar en el mundo de desarrollar métodos computacionales y entender la física detrás de los resultados. 
+
+No me es posible colocar todos los nombres que me gustaría pero, quiero que si esas personas leen este escrito, sepan que tienen un lugar en mi corazón.
+
+
+}
+\newcommand{\resumen}{
+La computación cuántica se ha vuelto un tema de interés en países del primer mundo debido al desarrollo de máquinas de sobre 100 \textit{qubits}, es por ello por lo que, es importante involucrarse en esta área por las proyecciones en el futuro próximo y las posibilidades que ofrece el uso de máquinas cuánticas frente a las tradicionales.
+
+Este trabajo constituye una primera versión de un esquema de flujo de trabajo, además de un análisis en torno al uso de recursos de las aplicaciones de métodos cuánticos para el estudio de sistemas físicos de la materia condensada y quimica cuantica, en el contexto de la física computacional. Estas técnicas se pusieron a prueba en diferentes estructuras para generar un constaste con las técnicas más famosas en el área.
+
+%El resumen y las palabras clave no deben superar la mitad de la página, donde debe precisarse brevemente: 1) lo que el autor ha hecho, 2) cómo lo hizo (sólo si es importante detallarlo), 3) los resultados principales, 4) la relevancia de los resultados. El resumen es una representación abreviada, pero comprensiva de la memoria y debe informar sobre el objetivo, la metodología y los resultados del trabajo realizado.
+}
+\newcommand{\resumeningles}{
+\textit{The quantum computing become one of the mayor topic of interest in the development countries, this is because of the development of quantum machine with over a 100 qubits, for near-term projections and the possibilities that offer the quantum machine are the major reason to start working in this area}.
+
+\textit{This work constitutes the first attempt to construct a workflow and perform an analysis of the resources usage of the quantum method in the study of condensed matter physics's systems and quantum chemistry systems in the context of computational physics. This methods were put in constract with other techniques in different structures}.
+
+%Corresponde a la traducción al idioma inglés del Resumen anterior. Sujeto a la misma regla de extensión del Resumen.
+}
+\newcommand{\palabrasclave}{
+Física computacional, Computación cuántica, Física del estado solido, Química cuántica, Análisis de rendimiento.
+}
+\newcommand{\palabrasclaveingles}{
+\textit{Computational physics, Quantum computing, Solid state physics, Quantum chemistry, Performance analysis}.
+}
+% @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>
+
+% Paquete para importar imágenes
+\usepackage{graphicx}
+% Directorio de las imágenes
+\graphicspath{ {figures/} }
+
+% Idioma y fuentes
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[T1]{fontenc}
+
+\usepackage{fontspec}
+% Los siguientes comandos fueron sugeridos por @anibalbastiass (ver issue#5)
+% para contar con Carlito en cursiva y negrita.
+\setmainfont{Carlito}[BoldFont={* Bold}]
+\setmainfont{Carlito}[ItalicFont={* Italic}]
+
+% Paquete para definir cualquier tamaño de font
+\usepackage{anyfontsize}
+
+% Settear font
+\setmainfont{Carlito}
+
+% Tamaño de la página y márgenes
+\usepackage[letterpaper,top=2.5cm,bottom=3cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Determinar interlineado:
+\renewcommand{\baselinestretch}{1.0}
+
+% Eliminar sangrías:
+\setlength{\parindent}{0cm}
+
+% Paquete para definir los formatos de los títulos
+\usepackage[explicit]{titlesec}
+
+\titleformat{name=\section}[block]{\fontsize{16}{24}\selectfont\bfseries}{}{0pt}{#1}
+\titleformat{name=\section,numberless}[block]{\fontsize{16}{24}\selectfont\bfseries}{}{0pt}{#1}
+\titlespacing*{name=\section}{0pt}{0pt}{0.5cm}
+\titlespacing*{name=\section,numberless}{0pt}{0pt}{0.5cm}
+
+% Separación entre parrafos
+\setlength{\parskip}{0.4cm}
+
+% Paquetes de utilidad general
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Formato de las tablas de contenido
+% \usepackage[tocflat]{tocstyle}
+\usepackage{tocstyle}
+\usetocstyle{allwithdot}
+
+% Para obtener el número de la última página
+\usepackage{lastpage}
+
+% Header y footer
+\usepackage{fancyhdr}
+\fancypagestyle{portada}{
+    \lhead{}
+    \chead{}
+    \rhead{}
+    \lfoot{}
+    \cfoot{\fontsize{10}{12}\selectfont \thepage}
+    \rfoot{}
+    \renewcommand{\headrulewidth}{0pt}
+}
+\fancypagestyle{intermedio}{
+    \lhead{}
+    \chead{\fontsize{10}{12}\selectfont\MakeUppercase{\titulo}}
+    \rhead{}
+    \lfoot{}
+    \cfoot{\fontsize{10}{12}\selectfont Página \textbf{\thepage}\ de \textbf{\pageref{LastPage}}}
+    \rfoot{}
+    \renewcommand{\headrulewidth}{1pt}
+}
+
+% Comandos para secciones
+\newcommand{\secnumbersection}[1]{
+\addtocounter{section}{1}
+\phantomsection
+\section*{CAPÍTULO \thesection \texorpdfstring{\\}\ #1}
+\addcontentsline{toc}{section}{CAPÍTULO \thesection : #1}
+\setcounter{subsection}{0}
+}
+\newcommand{\secnumberlesssection}[1]{
+\section*{#1}
+\phantomsection
+\addcontentsline{toc}{section}{#1}
+\setcounter{subsection}{0}
+}
+
+% Nombres
+\addto\captionsspanish{\renewcommand{\contentsname}{ÍNDICE DE CONTENIDOS}}
+\addto\captionsspanish{\renewcommand{\listfigurename}{ÍNDICE DE FIGURAS}}
+\addto\captionsspanish{\renewcommand{\listtablename}{ÍNDICE DE TABLAS}}
+\makeatletter
+\renewenvironment{thebibliography}[1]
+     {\secnumberlesssection{REFERENCIAS BIBLIOGRÁFICAS}
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
+
+% Personalizar Tabla de Contenidos
+
+\usepackage{tocloft}
+\renewcommand{\cftsecfont}{\fontsize{12}{14}\selectfont\fontspec{Carlito}}
+\renewcommand{\cftsubsecfont}{\fontsize{12}{14}\selectfont\fontspec{Carlito}}
+\renewcommand{\cftsubsubsecfont}{\fontsize{12}{14}\selectfont\fontspec{Carlito}}
+
+\renewcommand\cftfigfont{\fontsize{12}{14}\selectfont\fontspec{Carlito}}
+
+% Links sin color
+\usepackage{hyperref}
+\hypersetup{colorlinks = false}
+
+% Comando para secciónes sin enumeración
+% (sugerido por @anibalbastiass https://github.com/autopawn/tex-thesis-template/issues/5#issuecomment-916106128)
+\newcommand{\secnumberlesssubsection}[1]{
+\subsection*{#1}
+\phantomsection
+\addcontentsline{toc}{subsection}{#1}
+\setcounter{subsection}{0}
+}
+% Forma de uso:
+% \secnumberlesssubsection{"Sub seccion sin enumeración"}
+
+% @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@>
+\begin{document}
+\sloppy % Para evitar que referencias se escapen de los márgenes.
+
+\pagestyle{portada}
+\pagenumbering{roman}
+\input{portadas}
+
+\newpage
+\input{glosario}
+
+%Índice de contenidos:
+\newpage
+\thispagestyle{portada}
+\tableofcontents
+
+%Índice de figuras:
+\newpage
+\thispagestyle{portada}
+\phantomsection
+\addcontentsline{toc}{section}{ÍNDICE DE FIGURAS}
+\listoffigures
+\phantomsection
+\addcontentsline{toc}{section}{ÍNDICE DE TABLAS}
+\listoftables
+
+\newpage
+\pagestyle{intermedio}
+\pagenumbering{arabic}
+\input{introduccion}
+
+\newpage
+\input{definicion_del_problema}
+\newpage
+\input{marco_conceptual}
+\newpage
+\input{propuesta_de_solucion}
+\newpage
+\input{validacion_de_la_solucion}
+\newpage
+\input{conclusiones}
+
+\newpage
+\input{anexos}
+
+\newpage
+% Bibliografía estilo APA:
+\bibliographystyle{apalike-es}
+\bibliography{bibliografia}{}
+
+\end{document}
